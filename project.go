@@ -88,7 +88,6 @@ func (c *Client) getProjects(filter *ProjectsFilter) (*projectsResult, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Add("X-Redmine-API-Key", c.apikey)
 	res, err := c.Do(req)
 	if err != nil {
 		return nil, err

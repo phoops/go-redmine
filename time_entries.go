@@ -44,7 +44,6 @@ func (c *Client) TimeEntriesWithFilter(filter Filter) ([]TimeEntry, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Add("X-Redmine-API-Key", c.apikey)
 	res, err := c.Do(req)
 	if err != nil {
 		return nil, err

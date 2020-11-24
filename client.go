@@ -8,8 +8,9 @@ import (
 )
 
 type Client struct {
-	endpoint string
-	apikey   string
+	endpoint   string
+	apikey     string
+	switchUser string
 	*http.Client
 	Limit  int
 	Offset int
@@ -24,12 +25,12 @@ var DefaultLimit int = -1  // "-1" means "No setting"
 var DefaultOffset int = -1 //"-1" means "No setting"
 
 func NewClient(endpoint, apikey string) *Client {
-	return &Client{endpoint, apikey, http.DefaultClient, DefaultLimit, DefaultOffset}
+	return &Client{endpoint, apikey, "", http.DefaultClient, DefaultLimit, DefaultOffset}
 }
 
 func NewFullTraversingClient(endpoint, apikey string) *FullTraversingClient {
 	//return &FullTraversingClient{NewClient(endpoint, apikey)}
-	return &FullTraversingClient{&Client{endpoint, apikey, http.DefaultClient, 100, 0}}
+	return &FullTraversingClient{&Client{endpoint, apikey, "", http.DefaultClient, 100, 0}}
 }
 
 // URLWithFilter return string url by concat endpoint, path and filter
@@ -60,6 +61,18 @@ func (c *Client) getPaginationClause() string {
 		clause = clause + fmt.Sprintf("&offset=%v", c.Offset)
 	}
 	return clause
+}
+
+func (c *Client) SwitchUser(userLogin string) {
+	c.switchUser = userLogin
+}
+
+func (c *Client) Do(req *http.Request) (*http.Response, error) {
+	req.Header.Add("X-Redmine-API-Key", c.apikey)
+	if c.switchUser != "" {
+		req.Header.Add("X-Redmine-Switch-User", c.switchUser)
+	}
+	return c.Client.Do(req)
 }
 
 type errorsResult struct {

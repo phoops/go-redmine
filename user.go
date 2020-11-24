@@ -105,7 +105,6 @@ func (c *Client) UsersWithFilter(filter *UsersFilter) ([]User, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Add("X-Redmine-API-Key", c.apikey)
 	res, err := c.Do(req)
 	if err != nil {
 		return nil, err
@@ -163,7 +162,6 @@ func (c *Client) UserByIdAndFilter(id int, filter *UserByIdFilter) (*User, error
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Add("X-Redmine-API-Key", c.apikey)
 	res, err := c.Do(req)
 	if err != nil {
 		return nil, err
