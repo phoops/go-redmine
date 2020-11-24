@@ -15,11 +15,21 @@ type Client struct {
 	Offset int
 }
 
+// FullTraversingClient is a Client that automatically traverse pagination
+type FullTraversingClient struct {
+	*Client
+}
+
 var DefaultLimit int = -1  // "-1" means "No setting"
 var DefaultOffset int = -1 //"-1" means "No setting"
 
 func NewClient(endpoint, apikey string) *Client {
 	return &Client{endpoint, apikey, http.DefaultClient, DefaultLimit, DefaultOffset}
+}
+
+func NewFullTraversingClient(endpoint, apikey string) *FullTraversingClient {
+	//return &FullTraversingClient{NewClient(endpoint, apikey)}
+	return &FullTraversingClient{&Client{endpoint, apikey, http.DefaultClient, 100, 0}}
 }
 
 // URLWithFilter return string url by concat endpoint, path and filter
@@ -63,4 +73,10 @@ type IdName struct {
 
 type Id struct {
 	Id int `json:"id"`
+}
+
+type pagination struct {
+	TotalCount int `json:"total_count"`
+	Limit      int `json:"limit"`
+	Offset     int `json:"offset"`
 }

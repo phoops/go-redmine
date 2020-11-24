@@ -35,5 +35,6 @@ func encode4Redmine(s string) string {
 	a := strings.Replace(s, ">", "%3E", -1)
 	a = strings.Replace(a, "<", "%3C", -1)
 	a = strings.Replace(a, "=", "%3D", -1)
+	a = strings.Replace(a, "!", "%21", -1)
 	return a
 }
