@@ -1,3 +1,3 @@
-module github.com/mattn/go-redmine
+module github.com/phoops/go-redmine
 
 go 1.13

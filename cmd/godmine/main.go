@@ -19,7 +19,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mattn/go-redmine"
+	"github.com/phoops/go-redmine"
 )
 
 const name = "godmine"
