@@ -27,9 +27,22 @@ type Project struct {
 	Name         string         `json:"name"`
 	Identifier   string         `json:"identifier"`
 	Description  string         `json:"description"`
+	Status       int            `json:"status"`
 	CreatedOn    string         `json:"created_on"`
 	UpdatedOn    string         `json:"updated_on"`
 	CustomFields []*CustomField `json:"custom_fields,omitempty"`
+}
+
+func (p *Project) IsActive() bool {
+	return p.Status == 1
+}
+
+func (p *Project) IsClosed() bool {
+	return p.Status == 5
+}
+
+func (p *Project) IsArchived() bool {
+	return p.Status == 9
 }
 
 type ProjectsFilter struct {
